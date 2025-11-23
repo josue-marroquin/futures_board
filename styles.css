@@ -1,0 +1,179 @@
+body {
+    background-color: rgb(59, 78, 97);
+}
+.title {
+    color: white;
+}
+.table-container {
+    margin-top: 50px;
+}
+.table th {
+    color: white;
+    text-align: center;
+}
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+.long {
+    color: rgb(19, 153, 64) !important;
+    font-weight: bold;
+}
+.short {
+    color: rgb(192, 119, 23) !important;
+    font-weight: bold;
+}
+.profit {
+    background-color: rgba(8, 199, 27, 0.877) !important;
+}
+.loss {
+    background-color: rgba(206, 146, 5, 0.861) !important;
+}
+.profit_color {
+    color: rgb(17, 143, 29) !important;
+}
+.loss_color {
+    color: rgb(170, 109, 5) !important;
+}
+.trailing_on {
+    background-color: rgba(163, 208, 251, 0.416) !important;
+}
+.fader {
+    font-size: large;
+    font-weight: bold;
+}
+
+h3 {
+    color: white;
+}
+
+/* ===========================
+   ===   RSI ZONES   ===
+   =========================== */
+
+/* RSI entre 35 y 30 — señal media (oversold media) */
+.rsi_over_sold {
+    background: linear-gradient(to bottom, #22c55e, #15803d);
+    color: white;
+    font-weight: 700;
+}
+.rsi_low {
+    background: #22c55e6b !important;
+    color: #e8f1ff !important;
+    font-weight: 600 !important;
+}
+.rsi_mid_low {
+    background: #06351890 !important;
+    color: #e8f1ff !important;
+    font-weight: 600 !important;
+}
+
+/* RSI entre 65 y 70 — señal media (overbought media) */
+.rsi_high {
+    background: linear-gradient(to bottom, #ef444433, #b91c1c33);
+    color: #7a3e00;
+    font-weight: 600;
+}
+.rsi_mid_high {
+    background: linear-gradient(to bottom, #ef444433, #2d070745);
+    color: #7a3e00;
+    font-weight: 600;
+}
+.rsi_over_bought {
+    background: linear-gradient(to bottom, #ef4444, #b91c1c);
+    color: white;
+    font-weight: 700;
+}
+
+/* ===========================
+   ===   VORTEX ZONES   ===
+   =========================== */
+
+/* VI+ mayor o destacada — señal fuerte al alza */
+.vi_plus_top {
+    background: linear-gradient(to bottom, #ef4444, #b91c1c);
+    color: white;
+    font-weight: 700;
+}
+
+/* VI- mayor o destacada — señal fuerte a la baja */
+.vi_minus_top {
+    background: linear-gradient(to bottom, #22c55e, #15803d);
+    color: white;
+    font-weight: 700;
+}
+
+/* Estilos medios para VI */
+.vi_plus_mid {
+    background: linear-gradient(to bottom, #ef444433, #b91c1c33);
+    color: #064e3b;
+    font-weight: 600;
+}
+
+.vi_minus_mid {
+    background: linear-gradient(to bottom, #22c55e33, #15803d33);
+    color: #7f1d1d;
+    font-weight: 600;
+}
+
+.vi_gap_max {
+    background: linear-gradient(to bottom, #44deef66, #1ca4b978);
+    color: #cfffff;
+    font-weight: 600;
+}
+
+.vi_gap_max_2 {
+    background: linear-gradient(to bottom, #44efab66, #1cb95378);
+    color: #cfffff;
+    font-weight: 600;
+}
+
+.vi_gap_min {
+    background: linear-gradient(to bottom, #a7a7a74a, #41697c33);
+    color: #c9c9c9;
+    font-weight: 600;
+}
+
+.signal_active_position {
+    background: linear-gradient(to right, #348bd36b, #059669);
+    color: white;
+    font-weight: 700;
+}
+
+/* ===========================
+   ===       CANDLES      ===
+   =========================== */
+
+.price_up {
+    background: linear-gradient(to bottom, #0000006b, #0fb512);
+    color: white;
+    font-weight: 700;
+}
+
+.price_down {
+    background: linear-gradient(to bottom, #e3331774, #000000);
+    color: white;
+    font-weight: 700;
+}
+
+/* ===========================
+   ===      CHARTS         ===
+   =========================== */
+
+.h4Chart {
+    background-color: rgba(32, 98, 180, 0.669) !important;
+    color: white;
+    font-weight: 700;
+}
+
+.h1Chart {
+    background-color: rgba(24, 10, 181, 0.507) !important;
+    color: white;
+    font-weight: 700;
+}
+
+.min5Chart {
+    background-color: rgba(154, 33, 219, 0.363) !important;
+    color: white;
+    font-weight: 700;
+}
