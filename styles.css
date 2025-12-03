@@ -16,12 +16,12 @@ body {
     vertical-align: middle;
 }
 .long {
-    color: rgb(19, 153, 64) !important;
-    font-weight: bold;
+    color: rgb(23, 193, 49) !important;
+    font-weight: 900;
 }
 .short {
-    color: rgb(192, 119, 23) !important;
-    font-weight: bold;
+    color: rgb(225, 136, 28) !important;
+    font-weight: 900;
 }
 .profit {
     background-color: rgba(8, 199, 27, 0.877) !important;
@@ -54,6 +54,11 @@ h3 {
 /* RSI entre 35 y 30 — señal media (oversold media) */
 .rsi_over_sold {
     background: linear-gradient(to bottom, #22c55e, #15803d);
+    color: white;
+    font-weight: 700;
+}
+.rsi_way_over_sold {
+    background: linear-gradient(to bottom, rgb(0, 255, 21), rgb(0, 165, 19));
     color: white;
     font-weight: 700;
 }
@@ -135,9 +140,9 @@ h3 {
 }
 
 .signal_active_position {
-    background: linear-gradient(to right, #348bd36b, #059669);
+    background: linear-gradient(to bottom, #8787874a, #bbbbbb62);
     color: white;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 /* ===========================
@@ -153,6 +158,24 @@ h3 {
 .price_down {
     background: linear-gradient(to bottom, #e3331774, #000000);
     color: white;
+    font-weight: 700;
+}
+
+/* ===========================
+   ===       CLOSING       ===
+   =========================== */
+
+.close_up {
+    text-decoration: underline;
+    text-decoration-color:  rgb(23, 193, 49);
+    text-decoration-thickness: 2px;
+    font-weight: 700;
+}
+
+.close_down {
+    text-decoration: underline;
+    text-decoration-color: rgb(225, 136, 28);
+    text-decoration-thickness: 2px;
     font-weight: 700;
 }
 

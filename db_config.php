@@ -1,15 +1,8 @@
 <?php
 # DEV
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $db = "trading_panel";
-// $conn;
-
-# PROD
-$servername = "44.217.238.28";
-$username = "price_updator";
-$password = "00InsertaTuPrecioAqui_";
+$servername = "localhost";
+$username = "root";
+$password = "";
 $db = "trading_panel";
 $conn;
 

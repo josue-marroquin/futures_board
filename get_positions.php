@@ -23,7 +23,9 @@ function convert_time($datetime_str) {
 
 // --- Clasificar RSI ---
 function rsi_light($rsi_value) {
-    if ($rsi_value < 30) {
+    if ($rsi_value < 25) {
+        return "rsi_way_over_sold";
+    } elseif ($rsi_value < 30 && $rsi_value >= 25) {
         return "rsi_over_sold";
     } elseif ($rsi_value >= 30 && $rsi_value <= 35) {
         return "rsi_low";
@@ -45,7 +47,6 @@ function get_positions_and_logs() {
     global $conn;
     $jsondata = [];
     $active_symbols = []; // asegurado siempre
-
 
     /* ------------------------------------------------------------
         POSITIONS
@@ -132,7 +133,6 @@ function get_positions_and_logs() {
 
     $active_symbols = array_unique($active_symbols); // seguridad
 
-
     /* ------------------------------------------------------------
         LOGS
     ------------------------------------------------------------ */
@@ -169,7 +169,6 @@ function get_positions_and_logs() {
     } else {
         $jsondata['logs_table'] = "Sin logs para mostrar.";
     }
-
 
     /* ------------------------------------------------------------
         TRADE SIGNALS
@@ -211,7 +210,7 @@ function get_positions_and_logs() {
             $symbol = $row['symbol'];
 
             $active_class = in_array($symbol, $active_symbols)
-                            ? "signal_active_position"
+                            ? $side
                             : "";
 
             // RSI classes
@@ -220,9 +219,7 @@ function get_positions_and_logs() {
             $rsi_class_5m = rsi_light($row['RSI']);
 
             // Candle
-            $close_icon = ($row['close'] < $row['open'])
-                ? "<i class='bi bi-graph-down-arrow text-danger'></i>"
-                : "<i class='bi bi-graph-up-arrow text-success'></i>";
+            $close_indicator = ($row['close'] < $row['open']) ? "close_down" : "close_up";
 
             // Vortex
             $viplus_class = ($row['VI_plus'] > 1.20) ? "vi_plus_top" :
@@ -231,8 +228,8 @@ function get_positions_and_logs() {
             $viminus_class = ($row['VI_minus'] > 1.20) ? "vi_minus_top" :
                              (($row['VI_minus'] >= 1.10) ? "vi_minus_mid" : "");
 
-            $vigap_class = (abs($row['VI_gap_pct']) > 40) ? "vi_gap_max" :
-                           (abs($row['VI_gap_pct']) < 10 ? "vi_gap_min" : "");
+            $vigap_class = (abs($row['VI_gap_pct']) > 40 && abs($row['VI_gap_pct'] <= 50) ) ? "vi_gap_max" :
+                           (abs($row['VI_gap_pct'] > 50) ? "vi_gap_max_2" : (abs($row['VI_gap_pct']) < 10 ? "vi_gap_min" : ""));
 
 
             $signals_table .= "
@@ -241,13 +238,13 @@ function get_positions_and_logs() {
                     <td class='{$active_class}'>{$symbol}</td>
                     <td class='{$rsi_class_4h}'>{$row['rsi4h']}</td>
                     <td>".convert_time($row['open_time4h'])."</td>
-                    <td>{$row['open4h']}</td>
+                    <td class='{$active_class}'>{$row['open4h']}</td>
                     <td class='{$rsi_class_1h}'>{$row['rsi1h']}</td>
                     <td>".convert_time($row['open_time1h'])."</td>
-                    <td>{$row['open1h']}</td>
+                    <td class='{$active_class}'>{$row['open1h']}</td>
                     <td class='{$rsi_class_5m}'>{$row['RSI']}</td>
-                    <td>{$row['open']}</td>
-                    <td>{$row['close']} {$close_icon}</td>
+                    <td class='{$active_class}'>{$row['open']}</td>
+                    <td class='{$close_indicator}'>{$row['close']}</td>
                     <td>{$row['MACD_gap_pct']}</td>
                     <td class='{$viplus_class}'>{$row['VI_plus']}</td>
                     <td class='{$viminus_class}'>{$row['VI_minus']}</td>
