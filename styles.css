@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(59, 78, 97);
+    background-color: #5A5A5A;
 }
 .title {
     color: white;
@@ -48,17 +48,32 @@ h3 {
 }
 
 /* ===========================
+   ===         CLOCK       ===
+   =========================== */
+
+#clock {
+    padding: 10px;
+    font-family: Impact, sans-serif;
+    text-align: center;
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    color: white;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+/* ===========================
    ===   RSI ZONES   ===
    =========================== */
 
 /* RSI entre 35 y 30 — señal media (oversold media) */
-.rsi_over_sold {
-    background: linear-gradient(to bottom, #22c55e, #15803d);
+.rsi_way_over_sold {
+    background: linear-gradient(to bottom, rgb(0, 255, 21), rgb(0, 165, 19));
     color: white;
     font-weight: 700;
 }
-.rsi_way_over_sold {
-    background: linear-gradient(to bottom, rgb(0, 255, 21), rgb(0, 165, 19));
+.rsi_over_sold {
+    background: linear-gradient(to bottom, #22c55e, #15803d);
     color: white;
     font-weight: 700;
 }
@@ -74,6 +89,11 @@ h3 {
 }
 
 /* RSI entre 65 y 70 — señal media (overbought media) */
+.rsi_over_bought {
+    background: linear-gradient(to bottom, #ef4444, #b91c1c);
+    color: white;
+    font-weight: 700;
+}
 .rsi_high {
     background: linear-gradient(to bottom, #ef444433, #b91c1c33);
     color: #7a3e00;
@@ -83,11 +103,6 @@ h3 {
     background: linear-gradient(to bottom, #ef444433, #2d070745);
     color: #7a3e00;
     font-weight: 600;
-}
-.rsi_over_bought {
-    background: linear-gradient(to bottom, #ef4444, #b91c1c);
-    color: white;
-    font-weight: 700;
 }
 
 /* ===========================
@@ -111,37 +126,31 @@ h3 {
 /* Estilos medios para VI */
 .vi_plus_mid {
     background: linear-gradient(to bottom, #ef444433, #b91c1c33);
-    color: #064e3b;
     font-weight: 600;
 }
 
 .vi_minus_mid {
-    background: linear-gradient(to bottom, #22c55e33, #15803d33);
-    color: #7f1d1d;
+    background: #22c55e6b !important;
     font-weight: 600;
 }
 
 .vi_gap_max {
     background: linear-gradient(to bottom, #44deef66, #1ca4b978);
-    color: #cfffff;
     font-weight: 600;
 }
 
 .vi_gap_max_2 {
     background: linear-gradient(to bottom, #44efab66, #1cb95378);
-    color: #cfffff;
     font-weight: 600;
 }
 
 .vi_gap_min {
     background: linear-gradient(to bottom, #a7a7a74a, #41697c33);
-    color: #c9c9c9;
     font-weight: 600;
 }
 
 .signal_active_position {
     background: linear-gradient(to bottom, #8787874a, #bbbbbb62);
-    color: white;
     font-weight: 900;
 }
 
@@ -184,19 +193,25 @@ h3 {
    =========================== */
 
 .h4Chart {
-    background-color: rgba(32, 98, 180, 0.669) !important;
+    background-color: #01796F !important;
     color: white;
     font-weight: 700;
 }
 
 .h1Chart {
-    background-color: rgba(24, 10, 181, 0.507) !important;
-    color: white;
+    background-color: #B0C4DE !important;
+    color: black !important;
     font-weight: 700;
 }
 
 .min5Chart {
-    background-color: rgba(154, 33, 219, 0.363) !important;
+    background-color: #2b4ca8 !important;
+    color: white !important;
+    font-weight: 700;
+}
+
+.m15Chart {
+    background-color: #6D8196 !important;
     color: white;
     font-weight: 700;
 }

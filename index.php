@@ -57,30 +57,32 @@
           </table>
         </div>
       </div>
+      <div class="col-md-1">
+        <div id="clock"></div>
+      </div>  
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 pb-5 mb-5">
         <div class="table-responsive">
-          <h3>5 min chart signals</h3>
           <table class="table table-bordered table-dark">
             <thead>
               <tr>
-                <th></th>
-                <th></th>
-                <th colspan='3' class='h4Chart'>4h Chart</th>
-                <th colspan='3' class='h1Chart'>1h Chart</th>
+                <th colspan='2' style='background-color:#5A5A5A; border:none;'></th>
+                <th colspan='2' class='h4Chart'>4h Chart <span id='ot4h'></span></th>
+                <th colspan='2' class='h1Chart'>1h Chart <span id='ot1h'></span></th>
+                <th colspan='2' class='m15Chart'>15m Chart <span id='ot15m'></span></th>
                 <th colspan='7' class='min5Chart'>5min Chart</th>
               </tr>
               <tr>
                 <th>ID</th>
                 <th>Symbol</th>
-                <th>RSI 4h</th>
-                <th>Open Time 4h</th>
+                <th class='h4Chart'>RSI 4h</th>
                 <th>Open 4h</th>
-                <th>RSI 1h</th>
-                <th>Open Time 1h</th>
+                <th class='h1Chart'>RSI 1h</th>
                 <th>Open 1h</th>
-                <th>RSI</th>
+                <th class='m15Chart'>RSI 15m</th>
+                <th>Open 15m</th>
+                <th class='min5Chart'>RSI 5m</th>
                 <th>Open</th>
                 <th>Close</th>
                 <th>MACD GAP</th>
@@ -99,6 +101,7 @@
   </div>
 
   <script>
+    // Load all positions and the trade signals
     function loadPositions() {
       $(".fader").fadeOut();
       $.ajax({
@@ -109,6 +112,9 @@
           $("#positionsTableBody").html(response.positions_table);
           $("#info").html(response.logs_table);
           $("#signals").html(response.signals_table);
+          $("#ot4h").text(response.open_time_4h);
+          $("#ot1h").html(response.open_time_1h);
+          $("#ot15m").html(response.open_time_15m);
           $(".fader").fadeOut(200).fadeIn(300);
         },
         error: function() {
@@ -117,12 +123,32 @@
       });
     }
 
+    // Render Clock on screen
+    function updateClock() {
+        const now = new Date(); // Get the current date and time
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+
+        // Add leading zeros if hours, minutes, or seconds are less than 10
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        const timeString = `${hours}:${minutes}:${seconds}`; // Format the time string
+        document.getElementById('clock').textContent = timeString; // Update the HTML element
+    }
+
     // Cargar al iniciar
     $(document).ready(function() {
       loadPositions();
       setInterval(loadPositions, 3000); // Actualiza cada 5 segundos
+      // Call updateClock initially to display the time immediately
+      updateClock();
+      // Update the clock every second using setInterval
+      setInterval(updateClock, 1000);
     });
 
-  </script>
+</script>
 </body>
 </html>

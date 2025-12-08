@@ -76,6 +76,8 @@ function get_positions_and_logs() {
             $active_symbols[] = $symbol;
 
             $unrealized = (float)$row['unrealized_profit'];
+            $break_even = $row['breakeven_price'];
+            $trailing_stop = $row['trailing_stop'];
             $sum_pnl += $unrealized;
 
             $entry = (float)$row['entry_price'];
@@ -87,7 +89,8 @@ function get_positions_and_logs() {
 
             $pnl_bg = $unrealized > 0 ? "profit" : "loss";
             $side = $row['position_direction'] === "LONG" ? "long" : "short";
-            $trail = $row['trailing_stop'] > 0 ? "trailing_on" : "";
+            $trail = $side == 'long' && $trailing_stop > $break_even ? "profit" : ($side == 'short' && $trailing_stop < $break_even ? "loss" : "");
+            // $trail = $row['trailing_stop'] > 0 ? ($row['trailing_stop'] > )"trailing_on" : "";
 
 
             $positions_table .= "
@@ -98,11 +101,11 @@ function get_positions_and_logs() {
                     <td>{$entry}</td>
                     <td>{$volume}</td>
                     <td>{$mark}</td>
-                    <td>{$row['breakeven_price']}</td>
+                    <td>{$break_even}</td>
                     <td>{$row['liquidation_price']}</td>
                     <td>{$change}</td>
                     <td class='{$pnl_bg}'>{$unrealized}</td>
-                    <td class='{$trail}'>{$row['trailing_stop']}</td>
+                    <td class='{$trail}'>{$trailing_stop}</td>
                     <td>{$row['take_profit']}</td>
                     <td>{$row['position_amount']}</td>
                     <td>{$row['last_trade_time']}</td>
@@ -112,9 +115,7 @@ function get_positions_and_logs() {
         }
 
         $pnl_over_vol = $sum_vol > 0 ? round(($sum_pnl / $sum_vol) * 100, 2) : 0;
-
         $pnl_color = ($sum_pnl > 0) ? "profit_color" : "loss_color";
-
         $positions_table .= "
             <tr>
                 <td colspan='4'></td>
@@ -181,6 +182,9 @@ function get_positions_and_logs() {
                         ts1.RSI AS rsi1h,
                         ts1.open_time AS open_time1h,
                         ts1.open AS open1h,
+                        ts15.RSI AS rsi15m,
+                        ts15.open_time AS open_time15m,
+                        ts15.open AS open15m,
                         ts.RSI,
                         ts.open,
                         ts.close,
@@ -189,6 +193,7 @@ function get_positions_and_logs() {
                         ts.VI_minus,
                         ts.VI_gap_pct
                     FROM trade_signals ts
+                    JOIN trade_signals_15m ts15 ON ts.symbol = ts15.symbol
                     JOIN trade_signals_1h ts1 ON ts.symbol = ts1.symbol
                     JOIN trade_signals_4h ts4 ON ts.symbol = ts4.symbol
                     ORDER BY ts.symbol ASC";
@@ -208,14 +213,12 @@ function get_positions_and_logs() {
 
             $n++;
             $symbol = $row['symbol'];
-
-            $active_class = in_array($symbol, $active_symbols)
-                            ? $side
-                            : "";
+            $active_class = in_array($symbol, $active_symbols) ? $side : "";
 
             // RSI classes
             $rsi_class_4h = rsi_light($row['rsi4h']);
             $rsi_class_1h = rsi_light($row['rsi1h']);
+            $rsi_class_15m = rsi_light($row['rsi15m']);
             $rsi_class_5m = rsi_light($row['RSI']);
 
             // Candle
@@ -231,17 +234,16 @@ function get_positions_and_logs() {
             $vigap_class = (abs($row['VI_gap_pct']) > 40 && abs($row['VI_gap_pct'] <= 50) ) ? "vi_gap_max" :
                            (abs($row['VI_gap_pct'] > 50) ? "vi_gap_max_2" : (abs($row['VI_gap_pct']) < 10 ? "vi_gap_min" : ""));
 
-
             $signals_table .= "
                 <tr>
                     <td>{$n}</td>
                     <td class='{$active_class}'>{$symbol}</td>
                     <td class='{$rsi_class_4h}'>{$row['rsi4h']}</td>
-                    <td>".convert_time($row['open_time4h'])."</td>
                     <td class='{$active_class}'>{$row['open4h']}</td>
                     <td class='{$rsi_class_1h}'>{$row['rsi1h']}</td>
-                    <td>".convert_time($row['open_time1h'])."</td>
                     <td class='{$active_class}'>{$row['open1h']}</td>
+                    <td class='{$rsi_class_15m}'>{$row['rsi15m']}</td>
+                    <td class='{$active_class}'>{$row['open15m']}</td>
                     <td class='{$rsi_class_5m}'>{$row['RSI']}</td>
                     <td class='{$active_class}'>{$row['open']}</td>
                     <td class='{$close_indicator}'>{$row['close']}</td>
@@ -250,9 +252,14 @@ function get_positions_and_logs() {
                     <td class='{$viminus_class}'>{$row['VI_minus']}</td>
                     <td class='{$vigap_class}'>{$row['VI_gap_pct']}</td>
                 </tr>";
+
+                $jsondata['open_time_4h'] = convert_time($row['open_time4h']);
+                $jsondata['open_time_1h'] = convert_time($row['open_time1h']);
+                $jsondata['open_time_15m'] = convert_time($row['open_time15m']);
         }
 
         $jsondata['signals_table'] = $signals_table;
+        // $jsondata['open_time_15m'] = $signals_table;
 
     } else {
         $jsondata['signals_table'] = "Sin signals para mostrar.";
